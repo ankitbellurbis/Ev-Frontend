@@ -1,0 +1,70 @@
+.loginComponent {
+    background: #fff;
+    height: 100vh;
+  
+    #mainRow,
+    #carouselDiv,
+    #carouselExampleControls,
+    .carousel-inner,
+    .carousel-item {
+      height: 100%;
+    }
+    .carousel-inner > .item {
+      position: relative;
+      display: none;
+      -webkit-transition: 0.6s ease-in-out left;
+      -moz-transition: 0.6s ease-in-out left;
+      -o-transition: 0.6s ease-in-out left;
+      transition: 0.6s ease-in-out left !important;
+    }
+  
+    .d-block {
+      height: 100%;
+    }
+  
+    .loginFornt {
+      color: #015e89;
+    }
+  
+    input {
+      outline: none;
+      color: #015e89 !important;
+      height: 38px;
+  
+      &::placeholder {
+        color: #015e89 !important;
+      }
+    }
+  
+    label {
+      font-weight: bold;
+      color: #015e88;
+    }
+  
+    .loginButton {
+      background-color: #01444b !important;
+      color: #fff !important;
+    }
+  
+    .passwordDiv {
+      border-radius: 0.375rem;
+      display: flex;
+      align-items: center;
+      border: 1px solid #dee2e6;
+      input {
+        width: 92%;
+      }
+      img {
+        cursor: pointer;
+      }
+    }
+  
+    #passwordIconPic {
+      height: 27px;
+    }
+  
+    .errorField{
+      border: 1px solid red !important;
+    }
+  }
+  

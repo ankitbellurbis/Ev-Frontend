@@ -1,0 +1,47 @@
+<nav class="navbar navbar-expand-lg bg-primary" data-bs-theme="dark">
+    <div class="container-fluid">
+        <a class="navbar-brand">
+            <img src="../../../assets/images/logo1.png" width="80px" height="50px" alt="">
+        </a>
+        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarColor01"
+            aria-controls="navbarColor01" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarColor01">
+            <ul class="navbar-nav me-auto">
+                <li class="nav-item cursor">
+                    <a class="nav-link active" (click)="navigateTo('/dashboard')">Home
+                        <span class="visually-hidden">(current)</span>
+                    </a>
+                </li>
+                <li class="nav-item cursor">
+                    <a class="nav-link" (click)="navigateTo('chargerList')">Charger List</a>
+                </li>
+            </ul>
+            <ul class="navbar-nav ms-auto">
+                <li class="nav-item d-flex align-items-center text-white mx-2">
+                    {{userName}}
+                </li>
+                <li class="nav-item mx-2">
+                    <div class="circular-image">
+                        <img [src]='userImage' alt="">
+                    </div>
+                </li>
+                <li class="nav-item d-flex align-items-center dropdown">
+                    <a class="nav-link btn btn-info dropdown-toggle dropdown-toggle d-flex align-items-center"
+                        href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                    </a>
+                    <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="navbarDropdown">
+                        <li class="cursor"><a class="dropdown-item" (click)="navigateTo('/profile')">Profile</a></li>
+                        <li>
+                            <hr class="dropdown-divider" />
+                        </li>
+                        <li class="cursor">
+                            <a class="dropdown-item" (click)="logoutUser()" >Logout</a>
+                        </li>
+                    </ul>
+                </li>
+            </ul>
+        </div>
+    </div>
+</nav>
