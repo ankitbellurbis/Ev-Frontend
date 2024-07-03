@@ -1,0 +1,49 @@
+<div class="container-fluid" id="mainDiv">
+    <div class="row">
+        <div class="col-9 ps-1 pt-2 d-flex justify-content-center">
+            <div class="card shadow map-container" style="position: sticky">
+                <div #mapContainer id="ghgLocationMapContainer" style="height: 100%"></div>
+            </div>
+        </div>
+        <div class="col-3">
+
+            <div class="row">
+                <div class="col-12 mt-2">
+                    <div class="card shadow p-2">
+                        <label for="customRange2" class="form-label">Search range</label>
+                        <input (change)="changeSearchRange($event)" [(ngModel)]="searchRange" type="range" class="form-range" min="0" max="5" id="customRange2">
+                        <p>{{searchRange==0 ? '5km' : searchRange==1 ? '10km' : searchRange==2 ? '50km' : searchRange==3 ? '100km' : searchRange==4 ? '150km' : '200km'}}</p>
+                    </div>
+                </div>
+                <div class="col-12 mt-2">
+                    <div class="row">
+                        <div class="col-5"><hr></div>
+                        <div class="col-2">OR</div>
+                        <div class="col-5"><hr></div>
+                    </div>
+                </div>
+                <div class="col-12 mt-2">
+                    <div class="card shadow p-2">
+                        <label for="customRange2" class="form-label">Select State</label>
+                        <select (change)="getCityList($event)" name="state" [(ngModel)]="selectedState"
+                        class="form-control shadow-none" id="">
+                        <option value=null selected>Select</option>
+                        <option *ngFor="let item of stateList" [value]="item._id">{{item?.name}}</option>
+                    </select>
+                    </div>
+                </div>
+                <div class="col-12 mt-2">
+                    <div class="card shadow p-2">
+                        <label for="customRange2" class="form-label">Select city</label>
+                        <select name="city" (change)="changeCity($event)" [(ngModel)]="selectedCity" class="form-control shadow-none" id="">
+                            <option value=null selected>Select</option>
+                            <option *ngFor="let item of cityList" [value]="item._id">{{item?.name}}</option>
+                        </select>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </div>
+
+</div>

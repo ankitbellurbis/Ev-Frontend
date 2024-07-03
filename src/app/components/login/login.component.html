@@ -1,0 +1,95 @@
+<div class="container-fluid loginComponent">
+    <div class="row d-flex justify-content-center" id="mainRow">
+        <div class="col-lg-7 px-0" id="carouselDiv">
+            <div id="carouselExampleControls" class="carousel slide" data-bs-ride="carousel">
+                <div class="carousel-inner">
+                    <div class="carousel-item active">
+                        <img src="https://media.istockphoto.com/id/1330589502/photo/electric-vehicle-charging-station.jpg?s=612x612&w=0&k=20&c=uGQ7LTO97mzh_EovwCdrtLjZX4sn83KBeSscCpYCq6c="
+                            class="d-block w-100" alt="..." />
+                    </div>
+                    <div class="carousel-item">
+                        <img src="https://www.slashgear.com/img/gallery/this-ingenious-car-cover-can-protect-ev-batteries-from-shifting-weather-extremes/l-intro-1690835793.jpg"
+                            class="d-block w-100" alt="..." />
+                    </div>
+                    <div class="carousel-item">
+                        <img src="https://eepower.com/uploads/articles/EEcarcharging.jpg" class="d-block w-100"
+                            alt="..." />
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-4 col-lg-5">
+            <div class="row">
+                <div class="col-12 text-center mb-4" style="margin-top: 10%">
+                    <img src="../../../assets/images/logo1.png" width="30%" height="130px" />
+                </div>
+                <div class="col-12 d-flex justify-content-center">
+                    <div class="loginFornt" style="font-weight: bold">{{isUserLogin ? 'User Login' : 'Sign Up'}}</div>
+                </div>
+                <div class="col-2"></div>
+                <div class="col-8 card shadow p-3 mt-2" *ngIf="isUserLogin">
+                    <form autocomplete="off" [formGroup]="loginForm">
+                        <label for="username" class="loginFornt">Email</label><br />
+                        <input type="text" id="username" name="username" class="w-100 form-control shadow-none"
+                            formControlName="email" placeholder="Enter email"
+                            [ngClass]="{ errorField:loginForm.get('email')?.invalid && loginForm.get('email')?.touched}" /><br />
+                        <label for="pwd" class="loginFornt mt-3">Password</label><br />
+                        <div class="w-100 passwordDiv"
+                            [ngClass]="{errorField: loginForm.get('password')?.invalid && loginForm.get('password')?.touched}">
+                            <input [type]="!showPassword ? 'password' : 'text'" id="pwd" name="pwd"
+                                class="border-0 form-control shadow-none" placeholder="Enter Password"
+                                formControlName="password" />
+                            <img id="passwordIconPic" *ngIf="!showPassword"
+                                src="../../../assets/images/eye_close_icon.png" (click)="showPassword = true" alt="" />
+                            <img id="passwordIconPic" *ngIf="showPassword" src="../../../assets/images/eye_icon.png"
+                                (click)="showPassword = false" alt="" />
+                        </div>
+                        <br />
+                        <label class="loginFornt cursor" style="float: right; margin-top: 1%"
+                            (click)="isUserLogin = false">Sign up?</label>
+                        <br />
+                        <button class="btn w-100 mt-3 btn-primary shadow-none" type="button" (click)="login()">
+                            Login
+                        </button>
+                    </form>
+                </div>
+
+                <div class="col-8 card p-3 shadow mt-2" *ngIf="!isUserLogin">
+                    <form autocomplete="off" [formGroup]="signupForm">
+                        <label for="username" class="loginFornt">Name</label><br />
+                        <input type="text" id="username" name="username" class="w-100 form-control shadow-none"
+                            formControlName="fullName" placeholder="Enter username"
+                            [ngClass]="{errorField:signupForm.get('fullName')?.invalid && signupForm.get('fullName')?.touched}" /><br />
+                        <label for="email" class="loginFornt">Email</label><br />
+                        <input type="text" id="email" name="email" class="w-100 form-control shadow-none"
+                            formControlName="email" placeholder="Enter email"
+                            [ngClass]="{errorField:signupForm.get('email')?.invalid && signupForm.get('email')?.touched}" /><br />
+
+                        <label for="pwd" class="loginFornt">Password</label><br />
+                        <div class="w-100 passwordDiv"
+                            [ngClass]="{errorField:signupForm.get('password')?.invalid &&signupForm.get('password')?.touched}">
+                            <input [type]="!showPassword ? 'password' : 'text'" id="pwd" name="pwd"
+                                class="border-0 form-control shadow-none" placeholder="Enter Password"
+                                formControlName="password" />
+                            <img id="passwordIconPic" *ngIf="!showPassword"
+                                src="../../../../assets/images/eye_close_icon.png" (click)="showPassword = true"
+                                alt="" />
+                            <img id="passwordIconPic" *ngIf="showPassword" src="../../../../assets/images/eye_icon.png"
+                                (click)="showPassword = false" alt="" />
+                        </div>
+
+                        <br />
+                        <label class="loginFornt cursor" style="float: right; margin-top: 1%"
+                            (click)="isUserLogin = true">Log in?</label>
+                        <br />
+                        <button class="btn w-100 mt-3 btn-primary shadow-none" type="button" (click)="registerUser()">
+
+                            Sign Up
+                        </button>
+                    </form>
+                </div>
+                <div class="col-2"></div>
+            </div>
+        </div>
+    </div>
+</div>

@@ -1,0 +1,42 @@
+#mainDiv {
+  height: Calc(100vh - 80px);
+
+  .map-container {
+    width: 100%;
+    height: calc(100vh - 100px);
+    border: 2px solid black;
+    overflow: hidden;
+    img {
+      width: 100%;
+      height: 100%;
+    }
+  }
+  
+  ::ng-deep .leaflet-right > .leaflet-control > a {
+    display: none !important;
+  }
+
+//   #ghgLocationMapContainer {
+//     .leaflet-popup-content-wrapper {
+//       .leaflet-popup-content {
+//         width: 241px !important;
+//         margin: 13px 13px !important;
+//         .popoverParentDiv {
+//           background-color: #f0f0f0;
+//           padding: 10px;
+//           .popoverHeader {
+//             font-size: 15px !important;
+//             font-weight: 600 !important;
+//             color: #015e89 !important;
+//             word-wrap: break-word;
+//           }
+//           .popoverBody {
+//             font-size: 14px !important;
+//             font-weight: 500 !important;
+//             word-wrap: break-word;
+//           }
+//         }
+//       }
+//     }
+//   }
+}

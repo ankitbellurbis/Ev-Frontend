@@ -1,0 +1,126 @@
+<div class="container-fluid">
+    <div class="row justify-content-center">
+        <div class="col-10  my-3">
+            <div class="row">
+                <div class="col-12 text-center mb-2">
+                    <label [for]="'fileInput1'" class="cursor">
+                        <div class="circular-image">
+                            <img id="imageCursor"
+                                [src]='stationPic'
+                                alt="" srcset="" />
+                        </div>
+                    </label>
+                    <input  type="file" accept="image/*" [id]="'fileInput1'" name=""/>
+                </div>
+
+                <div class="col-5"><hr></div>
+                <div class="col-2 text-center fw-bold text-warning">Station Details</div>
+                <div class="col-5"><hr></div>
+                
+                <div class="col-12 my-3 p-4 shadow card">
+                    <div class="row">
+                        <div class="col-6">
+                            <div class="row mt-2">
+                                <div class="col-6 fw-bold ">Station Name</div>
+                                <div class="col-6">{{stationDetail?.stationName}}</div>
+                            </div>
+                            <div class="row mt-2">
+                                <div class="col-6 fw-bold ">Operator Name</div>
+                                <div class="col-6">{{stationDetail?.operatorName}}</div>
+                            </div>
+                            <div class="row mt-2">
+                                <div class="col-6 fw-bold ">Contact Number</div>
+                                <div class="col-6">{{stationDetail?.contactNumber}}</div>
+                            </div>
+                            <div class="row mt-2">
+                                <div class="col-6 fw-bold ">Country</div>
+                                <div class="col-6">India</div>
+                            </div>
+                            <div class="row mt-2">
+                                <div class="col-6 fw-bold ">State</div>
+                                <div class="col-6">{{stationDetail?.state}}</div>
+                            </div>
+                            <div class="row mt-2">
+                                <div class="col-6 fw-bold ">City</div>
+                                <div class="col-6">{{stationDetail?.city}}</div>
+                            </div>
+                        </div>
+                        <div class="col-6">
+                            <div class="row mt-2">
+                                <div class="col-6 fw-bold ">Address 1</div>
+                                <div class="col-6">{{stationDetail?.address1}}</div>
+                            </div>
+                            <div class="row mt-2">
+                                <div class="col-6 fw-bold ">Address 2</div>
+                                <div class="col-6">{{stationDetail?.address2}}</div>
+                            </div>
+                            <div class="row mt-2">
+                                <div class="col-6 fw-bold ">Land Mark</div>
+                                <div class="col-6">{{stationDetail?.landMark}}</div>
+                            </div>
+                            <div class="row mt-2">
+                                <div class="col-6 fw-bold ">Zip Code</div>
+                                <div class="col-6">{{stationDetail?.zipCode}}</div>
+                            </div>
+                            <div class="row mt-2">
+                                <div class="col-6 fw-bold ">Latitude & Longitude</div>
+                                <div class="col-6">{{stationDetail?.latLong}}</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-5"><hr></div>
+                <div class="col-2 text-center fw-bold text-warning">Charger Details</div>
+                <div class="col-5"><hr></div>
+                
+                <div class="col-12 my-3 p-4 shadow card" *ngFor="let item of stationDetail?.chargerDetails">
+                    <div class="row">
+                        <div class="col-6">
+                            <div class="row mt-2">
+                                <div class="col-6 fw-bold">Serial Number</div>
+                                <div class="col-6">{{item?.serialNumber}}</div>
+                            </div>
+                            <div class="row mt-2">
+                                <div class="col-6 fw-bold">Connector Type</div>
+                                <div class="col-6">{{item?.connectorType}}</div>
+                            </div>
+                            <div class="row mt-2">
+                                <div class="col-6 fw-bold">Charging Capacity</div>
+                                <div class="col-6">{{item?.isFastCharging=='Yes'?'Fast':'Slow'}} ({{item?.chargingCapacity}})</div>
+                            </div>
+                            <div class="row mt-2">
+                                <div class="col-6 fw-bold">Current AMP Value</div>
+                                <div class="col-6">{{item?.currentAmpValue}}</div>
+                            </div>
+                        </div>
+                        <div class="col-6">
+                            <div class="row mt-2">
+                                <div class="col-6 fw-bold">Available</div>
+                                <div class="col-6">{{item?.isAvailable}}</div>
+                            </div>
+                            <div class="row mt-2">
+                                <div class="col-6 fw-bold">Fast Charging</div>
+                                <div class="col-6">{{item?.isFastCharging}}</div>
+                            </div>
+                            <div class="row mt-2">
+                                <div class="col-6 fw-bold">Number Of Slots</div>
+                                <div class="col-6">{{item?.numberOfSlots}}</div>
+                            </div>
+                            <div class="row mt-2">
+                                <div class="col-6 fw-bold">Available Timing</div>
+                                <div class="col-6">{{item?.availableTiming}}</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-5"><hr></div>
+                <div class="col-2 text-center fw-bold text-warning">Charger Image</div>
+                <div class="col-5"><hr></div>
+                
+                <div class="col-12 my-3 p-4 align-items-center shadow card">
+                    <img class="rounded border-info shadow" width="35%" height="500px" src="https://intents-poi.s3.ap-south-1.amazonaws.com/1674108900611432499_poi_1674108895730.jpg" alt="">
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
