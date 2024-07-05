@@ -44,6 +44,7 @@ export class ProfileComponent {
       this.state = res.data?.state
       this.city = res.data?.city
       this.showImageUrl = res.data?.avatar
+      if(!res.data?.avatar?.includes('https')) this.showImageUrl = `https${res.data?.avatar?.split('http')[1]}` 
       if (res?.data?.city) this.getCityList(res?.data?.state, 'api')
       this._spinner.hide();
 
