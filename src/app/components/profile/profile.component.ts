@@ -15,6 +15,12 @@ export class ProfileComponent {
   stateList: any
   cityList: any
   selectedFile: any;
+  fullName: any;
+  userName: any;
+  email: any;
+  dateOfBirth: any;
+  state: any;
+  city: any;
 
   constructor(
     private router: Router,
@@ -31,7 +37,12 @@ export class ProfileComponent {
   getUserInfo(type: string) {
     this._spinner.show();
     this.userService.getUserDetail().subscribe((res: any) => {
-      this.userDetail = res.data
+      this.fullName = res.data?.fullName
+      this.userName = res.data?.userName
+      this.email = res.data?.email
+      this.dateOfBirth = res.data?.dateOfBirth
+      this.state = res.data?.state
+      this.city = res.data?.city
       this.showImageUrl = res.data?.avatar
       if (res?.data?.city) this.getCityList(res?.data?.state, 'api')
       this._spinner.hide();
@@ -84,18 +95,18 @@ export class ProfileComponent {
   }
 
   updateProfileData() {
-    if (!this.userDetail?.fullName ||!this.userDetail?.email ||!this.userDetail?.dateOfBirth ||!this.userDetail?.state ||!this.userDetail?.city ) {
+    if (!this.fullName ||!this.email ||!this.dateOfBirth ||!this.state ||!this.city ) {
       this.messageService.errorToast("Please fill all the required fields")
       return
     }
     this._spinner.show();
     let formData: any = new FormData();
-    formData.append('fullName', this.userDetail?.fullName)
-    formData.append('email', this.userDetail?.email)
-    formData.append('dateOfBirth', this.userDetail?.dateOfBirth)
-    formData.append('state', this.userDetail?.state)
-    formData.append('city', this.userDetail?.city)
-    formData.append('avatar', this.selectedFile ?? this.userDetail?.avatar)
+    formData.append('fullName', this.fullName)
+    formData.append('email', this.email)
+    formData.append('dateOfBirth', this.dateOfBirth)
+    formData.append('state', this.state)
+    formData.append('city', this.city)
+    formData.append('avatar', this.selectedFile ?? this.showImageUrl)
 
     this.userService.updateUserData(formData).subscribe((res: any) => {
       this.messageService.successToast("user data updated successfully")
