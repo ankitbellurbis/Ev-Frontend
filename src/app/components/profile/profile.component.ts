@@ -84,17 +84,17 @@ export class ProfileComponent {
   }
 
   updateProfileData() {
-    if (!this.userDetail.fullName ||!this.userDetail.email ||!this.userDetail.dateOfBirth ||!this.userDetail.state ||!this.userDetail.city ) {
+    if (!this.userDetail?.fullName ||!this.userDetail?.email ||!this.userDetail?.dateOfBirth ||!this.userDetail?.state ||!this.userDetail?.city ) {
       this.messageService.errorToast("Please fill all the required fields")
       return
     }
     this._spinner.show();
     let formData: any = new FormData();
-    formData.append('fullName', this.userDetail.fullName)
-    formData.append('email', this.userDetail.email)
-    formData.append('dateOfBirth', this.userDetail.dateOfBirth)
-    formData.append('state', this.userDetail.state)
-    formData.append('city', this.userDetail.city)
+    formData.append('fullName', this.userDetail?.fullName)
+    formData.append('email', this.userDetail?.email)
+    formData.append('dateOfBirth', this.userDetail?.dateOfBirth)
+    formData.append('state', this.userDetail?.state)
+    formData.append('city', this.userDetail?.city)
     formData.append('avatar', this.selectedFile ?? this.userDetail?.avatar)
 
     this.userService.updateUserData(formData).subscribe((res: any) => {
