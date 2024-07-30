@@ -44,6 +44,7 @@ export class DashboardComponent {
   ngOnInit() {
     this.initializeMap();
     this.getStateList()
+    this.getChargerList();
   }
 
   initializeMap(): void {
@@ -101,6 +102,15 @@ export class DashboardComponent {
               // the device is allowed to take 10 seconds in order to return a position
             };
 
+            this.map.on('click', (event: any) => {
+              // if (this.currentMarker) {
+              //   this.map.removeLayer(this.currentMarker);
+              // }
+              // this.addressData.lat = event?.latlng.lat;
+              // this.addressData.lon = event?.latlng.lng;
+              this.showCoordinatesOnMap(event.latlng.lat, event.latlng.lng);
+            });
+
             navigator?.geolocation?.getCurrentPosition(
               position => {
                 // this.spinner.show();
@@ -108,12 +118,12 @@ export class DashboardComponent {
                 const longitude = position?.coords?.longitude;
                 this.currentLatitude = latitude;
                 this.currentLongitude = longitude;
-                this.map.setView([latitude, longitude], 12);
+                this.map.setView([latitude, longitude], 13);
                 const marker1 = L.marker([
                   latitude,
                   longitude
                 ]).addTo(this.map);
-                marker1.bindPopup('latitude');
+                marker1.bindPopup('You are here!').openPopup();
 
                 this.circle = L.circle([latitude, longitude], {
                   color: 'blue',
@@ -123,7 +133,7 @@ export class DashboardComponent {
                 }).addTo(this.map);
                 tiles.addTo(this.map);
 
-                this.getChargerList(L, latitude, longitude)
+                if(this.chargerList) this.checkNearByChargers(latitude, longitude)
                 // this.showCoordinatesOnMap(latitude, longitude);
 
                 // this.mapCircleRadius(circle)
@@ -186,13 +196,12 @@ export class DashboardComponent {
 
         // this.currentMarker.bindPopup(`Lat: ${latitude}, Long: ${longitude}`).openPopup();
         this.currentMarker.bindPopup(`Lat: ${latitude}, Long: ${longitude}`);
-        this.map.setView([latitude, longitude], 10);
+        this.map.setView([latitude, longitude], 13);
       }, 0);
     }
   }
 
   changeSearchRange(event: any) {
-    console.log(event.target.value);
     switch (event.target.value) {
       case '0': this.radius = 5000; break;
       case '1': this.radius = 10000; break;
@@ -225,7 +234,7 @@ export class DashboardComponent {
     let stateId = event.target.value
     this.selectedCityName = null
     this.selectedCity = null
-    this.stateList.find((ele: any) => {
+    this.stateList?.find((ele: any) => {
       if (ele._id == event.target.value) {
         this.selectedStateName = ele.name
         this.findLatLong()
@@ -242,7 +251,7 @@ export class DashboardComponent {
     if (
       !this.selectedCity
     ) {
-      zoomSize = 4;
+      zoomSize = 10;
     } else zoomSize = 10;
     this._stationService
       .searchAddressLatLong(
@@ -270,13 +279,13 @@ export class DashboardComponent {
     })
   }
 
-  getChargerList(L: any, latitude: any, longitude: any) {
+  getChargerList() {
     this._spinner.show();
     this._stationService.getStationList().subscribe((res: any) => {
       this._spinner.hide();
       this.chargerList = res?.data;
 
-      this.checkNearByChargers(this.currentLatitude, this.currentLongitude);
+      // this.checkNearByChargers(this.currentLatitude, this.currentLongitude);
     })
   }
 
