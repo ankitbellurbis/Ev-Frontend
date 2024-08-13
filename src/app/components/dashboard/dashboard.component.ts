@@ -31,6 +31,7 @@ export class DashboardComponent {
   chargerIcon!: any;
   currentLatitude!: number;
   currentLongitude!: number;
+  allMarkers: any = [];
 
   constructor(
     private router: Router,
@@ -81,14 +82,6 @@ export class DashboardComponent {
             // scrollWheelZoom: false,
           });
 
-          // const tiles = L.tileLayer(
-          //   'https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png',
-          //   {
-          //     maxZoom: 20,
-          //     minZoom: 1,
-          //   },
-          // );
-
           const tiles = L.tileLayer('http://{s}.google.com/vt/lyrs=m&x={x}&y={y}&z={z}', {
             maxZoom: 20, minZoom: 1,
             subdomains: ['mt0', 'mt1', 'mt2', 'mt3'],
@@ -103,17 +96,11 @@ export class DashboardComponent {
             };
 
             this.map.on('click', (event: any) => {
-              // if (this.currentMarker) {
-              //   this.map.removeLayer(this.currentMarker);
-              // }
-              // this.addressData.lat = event?.latlng.lat;
-              // this.addressData.lon = event?.latlng.lng;
               this.showCoordinatesOnMap(event.latlng.lat, event.latlng.lng);
             });
 
             navigator?.geolocation?.getCurrentPosition(
               position => {
-                // this.spinner.show();
                 const latitude = position?.coords?.latitude;
                 const longitude = position?.coords?.longitude;
                 this.currentLatitude = latitude;
@@ -125,25 +112,15 @@ export class DashboardComponent {
                 ]).addTo(this.map);
                 marker1.bindPopup('You are here!').openPopup();
 
-                this.circle = L.circle([latitude, longitude], {
-                  color: 'blue',
-                  fillColor: '#158cba',
-                  fillOpacity: 0.5,
-                  radius: this.radius
-                }).addTo(this.map);
-                tiles.addTo(this.map);
+                // this.circle = L.circle([latitude, longitude], {
+                //   color: 'blue',
+                //   fillColor: '#158cba',
+                //   fillOpacity: 0.5,
+                //   radius: this.radius
+                // }).addTo(this.map);
+                // tiles.addTo(this.map);
 
-                if(this.chargerList) this.checkNearByChargers(latitude, longitude)
-                // this.showCoordinatesOnMap(latitude, longitude);
-
-                // this.mapCircleRadius(circle)
-
-                // console.log(circle)
-
-                // let latlng1 = L.latLng(latitude, longitude);
-                // let latlng2 = L.latLng(28.404990758851316, 77.05879211425783);
-                // let distance = latlng1.distanceTo(latlng2) / 1000;
-                // map.remove()
+                if(this.chargerList) this.checkNearByChargers('api','')
               },
               errorFunction,
               config,
@@ -237,7 +214,7 @@ export class DashboardComponent {
     this.stateList?.find((ele: any) => {
       if (ele._id == event.target.value) {
         this.selectedStateName = ele.name
-        this.findLatLong()
+        this.findLatLong("state", ele.name)
       }
     })
     this.userService.getCityListById(stateId).subscribe((res: any) => {
@@ -246,7 +223,7 @@ export class DashboardComponent {
     })
   }
 
-  findLatLong() {
+  findLatLong(type:string, name:string) {
     let zoomSize: number;
     if (
       !this.selectedCity
@@ -263,7 +240,7 @@ export class DashboardComponent {
             [Number(res[0]?.lat), Number(res[0]?.lon)],
             zoomSize
           );
-          this.checkNearByChargers(Number(res[0]?.lat), Number(res[0]?.lon));
+          this.checkNearByChargers(type, name);
         } else {
           this._messageService.errorToast('Please enter valid city code.');
         }
@@ -274,7 +251,7 @@ export class DashboardComponent {
     this.cityList.forEach((ele: any) => {
       if (ele._id == event.target.value) {
         this.selectedCityName = ele.name
-        this.findLatLong()
+        this.findLatLong('city', ele.name)
       }
     })
   }
@@ -289,20 +266,33 @@ export class DashboardComponent {
     })
   }
 
-  checkNearByChargers(currentLatitude: any, currentLongitude: any) {
-    if (this.chargerList.length > 0) {
-      let latlng1 = L.latLng(currentLatitude, currentLongitude);
-      this.chargerList.forEach((ele: any) => {
-        let latlng2 = L.latLng(Number(ele?.latLong?.split(',')[0]), Number(ele?.latLong?.split(',')[1]));
-        let distance = latlng1.distanceTo(latlng2) / 1000;
+  checkNearByChargers(type:string, name:string) {
+    this.allMarkers?.map((ele:any)=>{
+      this.map?.removeLayer(ele);
+    })
+    if (this.chargerList?.length > 0) {  
+      this.allMarkers = [];   
+      let latlng:any 
+      this.chargerList?.forEach((ele: any) => {
+        if(type=='state' && ele.state == name){
 
-        if (distance <= this.radius / 1000) {
+          latlng = L.latLng(Number(ele?.latLong?.split(',')[0]), Number(ele?.latLong?.split(',')[1]));
+        }
+        else if(type=='city' && ele.city == name){
+          
+          latlng = L.latLng(Number(ele?.latLong?.split(',')[0]), Number(ele?.latLong?.split(',')[1]));
+        }
+        else if(type=='api'){
+
+          latlng = L.latLng(Number(ele?.latLong?.split(',')[0]), Number(ele?.latLong?.split(',')[1]));
+        }
+
+        if (latlng) {
           this.currentMarker = L?.marker([Number(ele?.latLong?.split(',')[0]), Number(ele?.latLong?.split(',')[1])], {
             title: `Lat: ${Number(ele?.latLong?.split(',')[0])}, Long: ${Number(ele?.latLong?.split(',')[1])}`, icon: this.chargerIcon
-            // Add other marker options if needed
           })?.addTo(this.map);
+          this.allMarkers.push(this.currentMarker);
 
-          // this.currentMarker.bindPopup(`Lat: ${latitude}, Long: ${longitude}`).openPopup();
           this.currentMarker.bindPopup(`Lat: ${Number(ele?.latLong?.split(',')[0])}, Long: ${Number(ele?.latLong?.split(',')[1])}`);
         }
       })
